@@ -6,11 +6,13 @@ import com.codegym.cms.service.CustomerService;
 import com.codegym.cms.service.ProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -53,10 +55,10 @@ public class CustomerController {
     }
 
     @GetMapping("/edit-customer/{id}")
-    public ModelAndView showEditForm(@PathVariable Long id){
+        public ModelAndView edit(@PathVariable Long id) {
         Customer customer = customerService.findById(id);
         if(customer != null) {
-            ModelAndView modelAndView = new ModelAndView("/customer/delete");
+            ModelAndView modelAndView = new ModelAndView("/customer/edit");
             modelAndView.addObject("customer", customer);
             return modelAndView;
 
@@ -66,10 +68,11 @@ public class CustomerController {
         }
     }
 
+
     @PostMapping("/edit-customer")
     public ModelAndView updateCustomer(@ModelAttribute("customer") Customer customer){
         customerService.save(customer);
-        ModelAndView modelAndView = new ModelAndView("/customer/delete");
+        ModelAndView modelAndView = new ModelAndView("/customer/edit");
         modelAndView.addObject("customer", customer);
         modelAndView.addObject("message", "Customer updated successfully");
         return modelAndView;
