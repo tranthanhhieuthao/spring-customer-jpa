@@ -1,5 +1,7 @@
 package com.codegym.cms.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +13,19 @@ public class Customer {
     private Long id;
     private String firstName;
     private String lastName;
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "province_id")
+
+    private Province province;
 
     public Customer() {}
 
